@@ -112,7 +112,7 @@ git fetch origindest $TARGET_BRANCH
 
 # do the cherry-pick
 git checkout -b origindest/$TARGET_BRANCH origindest/$TARGET_BRANCH
-git cherry-pick $MERGE_COMMIT &> /tmp/error.log || (
+git cherry-pick -x $MERGE_COMMIT &> /tmp/error.log || (
 		gh pr comment $PR_NUMBER --body "🤖 says: Error cherry-picking.<br/><br/>$(cat /tmp/error.log)"
 		exit 1
 )
