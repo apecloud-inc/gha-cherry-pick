@@ -91,14 +91,13 @@ fi
 
 echo "Target branch for PR #$PR_NUMBER is $TARGET_BRANCH"
 
-USER_TOKEN=""
 if [[ "${USER_LOGIN}" =~ ^[0-9] ]]; then  
-	USER_TOKEN=""
+	UNTRIMMED_COMMITTER_TOKEN=${GITHUB_TOKEN}
 else	
 	USER_TOKEN=${USER_LOGIN//-/_}_TOKEN
+ 	UNTRIMMED_COMMITTER_TOKEN=${!USER_TOKEN:-$GITHUB_TOKEN}
 fi
 
-UNTRIMMED_COMMITTER_TOKEN=${!USER_TOKEN:-$GITHUB_TOKEN}
 COMMITTER_TOKEN="$(echo -e "${UNTRIMMED_COMMITTER_TOKEN}" | tr -d '[:space:]')"
 
 # See https://github.com/actions/checkout/issues/766 for motivation.
