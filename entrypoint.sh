@@ -91,9 +91,9 @@ fi
 
 echo "Target branch for PR #$PR_NUMBER is $TARGET_BRANCH"
 
-if [[ "${USER_LOGIN}" =~ ^[0-9] ]]; then  
+if [[ "${USER_LOGIN}" =~ ^[0-9] ]]; then
 	UNTRIMMED_COMMITTER_TOKEN=${GITHUB_TOKEN}
-else	
+else
 	USER_TOKEN=${USER_LOGIN//-/_}_TOKEN
  	UNTRIMMED_COMMITTER_TOKEN=${!USER_TOKEN:-$GITHUB_TOKEN}
 fi
@@ -122,7 +122,5 @@ git cherry-pick -x $MERGE_COMMIT &> /tmp/error.log || (
 		exit 1
 )
 
-# push back
-git push origindest origindest/$TARGET_BRANCH:$TARGET_BRANCH
-
-gh pr comment $PR_NUMBER --body "🤖 says: cherry pick action finished successfully 🎉!<br/>See: https://github.com/$REPO_NAME/actions/runs/$GITHUB_RUN_ID"
+echo "✅ Cherry-pick succeeded. The merged code is now available in the current workspace."
+echo "   No changes were pushed to the remote branch '$TARGET_BRANCH'."
