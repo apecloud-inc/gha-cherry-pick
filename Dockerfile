@@ -11,9 +11,7 @@ LABEL "com.github.actions.color"="purple"
 
 RUN apk --no-cache add jq bash curl git git-lfs github-cli
 
-RUN adduser -D -u 1001 runner && chown -R runner /github/workspace
-
-USER runner
+RUN adduser -D -u 1001 runner
 
 ADD entrypoint.sh /entrypoint.sh
 

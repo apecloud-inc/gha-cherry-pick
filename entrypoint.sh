@@ -1,5 +1,14 @@
 #!/bin/bash
 
+fix_and_run_as_runner() {
+    if [ "$(id -u)" = "0" ]; then
+        chown -R runner:runner /github/workspace 2>/dev/null || true
+        exec su runner -c "bash $0 $@"
+    fi
+}
+
+fix_and_run_as_runner "$@"
+
 set -e
 
 REPO_NAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
